@@ -19,6 +19,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ClienteRequest {
 
+
+
+
+   
    private String nome;
 
    @NotBlank(message = "O Email é de preenchimento obrigatório")

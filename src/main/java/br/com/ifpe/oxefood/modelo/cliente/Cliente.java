@@ -25,6 +25,12 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Cliente extends EntidadeAuditavel {
 
+
+
+
+    
+
+    
     @Column
     private String email;
 
