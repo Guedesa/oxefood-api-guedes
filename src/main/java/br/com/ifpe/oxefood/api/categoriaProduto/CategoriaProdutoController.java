@@ -1,8 +1,6 @@
-package br.com.ifpe.oxefood.api.cliente;
+package br.com.ifpe.oxefood.api.categoriaProduto;
 
 import java.util.List;
-
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,33 +16,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ifpe.oxefood.modelo.cliente.Cliente;
-import br.com.ifpe.oxefood.modelo.cliente.ClienteService;
+import br.com.ifpe.oxefood.modelo.produto.CategoriaProduto;
+import br.com.ifpe.oxefood.modelo.produto.CategoriaProdutoService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@RequestMapping("/api/cliente")
+@RequestMapping("/api/categoriaProduto")
 @CrossOrigin
-public class ClienteController {
+public class CategoriaProdutoController {
 
     @Autowired
-    private ClienteService clienteService;
+    private CategoriaProdutoService categoriaProdutoService;
 
     @ApiOperation(value = "Serviço responsável por salvar um cliente no sistema.")
     @PostMapping
-    public ResponseEntity<Cliente> save(@RequestBody @Valid ClienteRequest request) {
+    public ResponseEntity<CategoriaProduto> save(@RequestBody CategoriaProdutoRequest request) {
 
-        Cliente cliente = clienteService.save(request.build());
-        return new ResponseEntity<Cliente>(cliente, HttpStatus.CREATED);
+        CategoriaProduto categoriaProduto = categoriaProdutoService.save(request.build());
+        return new ResponseEntity<CategoriaProduto>(categoriaProduto, HttpStatus.CREATED);
     }
 
     // Consultar
     @ApiOperation(value = "Serviço responsável por listar um cliente no sistema.")
     @GetMapping
-    public List<Cliente> findAll() {
+    public List<CategoriaProduto> findAll() {
 
-        return clienteService.findAll();
+        return categoriaProdutoService.findAll();
     }
 
     @ApiOperation(value = "Serviço responsável por obter um cliente referente ao Id passado na URL.")
@@ -57,16 +56,16 @@ public class ClienteController {
     })
 
     @GetMapping("/{id}")
-    public Cliente findById(@PathVariable Long id) {
+    public CategoriaProduto findById(@PathVariable Long id) {
 
-        return clienteService.findById(id);
+        return categoriaProdutoService.findById(id);
     }
 
     // Alterar
     @PutMapping("/{id}")
-    public ResponseEntity<Cliente> update(@PathVariable("id") Long id, @RequestBody ClienteRequest request) {
+    public ResponseEntity<Cliente> update(@PathVariable("id") Long id, @RequestBody CategoriaProdutoRequest request) {
 
-        clienteService.update(id, request.build());
+        categoriaProdutoService.update(id, request.build());
         return ResponseEntity.ok().build();
 
     }
@@ -74,7 +73,7 @@ public class ClienteController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
 
-        clienteService.delete(id);
+        categoriaProdutoService.delete(id);
         return ResponseEntity.ok().build();
     }
 }

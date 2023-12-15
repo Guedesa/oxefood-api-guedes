@@ -2,7 +2,10 @@ package br.com.ifpe.oxefood.api.entregador;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,13 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.ifpe.oxefood.modelo.entregador.Entregador;
 import br.com.ifpe.oxefood.modelo.entregador.EntregadorService;
 import io.swagger.annotations.ApiOperation;
-
-
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-
-
-
 
 @RestController
 @RequestMapping("/api/entregador")
@@ -33,17 +31,24 @@ public class EntregadorController {
     @Autowired
     private EntregadorService entregadorService;
 
+    @ApiOperation(value = "Serviço responsável por salvar um entregador no sistema.")
     @PostMapping
+    public ResponseEntity<Entregador> save(@RequestBody @Valid EntregadorRequest request) {
 
-    @ApiOperation(value = "Serviço responsável por listar todos os Entregadores do sistema.")
+        Entregador entregador = entregadorService.save(request.build());
+        return new ResponseEntity<Entregador>(entregador, HttpStatus.CREATED);
+    }
+
+    @ApiOperation(value = "Serviço responsável por Listar um entregador no sistema.")
     @GetMapping
-    public List<Entregador> listarTodos() {
-        return entregadorService.listarTodos();
+    public List<Entregador> findAll() {
+
+        return entregadorService.findAll();
     }
 
     @ApiOperation(value = "Serviço responsável por obter um entregador referente ao Id passado na URL.")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Retorna  o entregaodr."),
+            @ApiResponse(code = 200, message = "Retorna  o entregador."),
             @ApiResponse(code = 401, message = "Acesso não autorizado."),
             @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso."),
             @ApiResponse(code = 404, message = "Não foi encontrado um registro para o Id informado."),
@@ -51,8 +56,9 @@ public class EntregadorController {
     })
 
     @GetMapping("/{id}")
-    public Entregador obterPorID(@PathVariable Long id) {
-        return entregadorService.obterPorID(id);
+    public Entregador findById(@PathVariable Long id) {
+
+        return entregadorService.findById(id);
     }
 
     // Alterar

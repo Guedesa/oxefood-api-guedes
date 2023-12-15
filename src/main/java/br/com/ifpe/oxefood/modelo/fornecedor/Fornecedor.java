@@ -23,6 +23,18 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+/*
+ * id Long EntidadeNegocio
+ * ...
+ * versao Long EntidadeAuditavel
+ * ...
+ * nome String Fornecedor
+ * endereco String Fornecedor
+ * dataFundacao LocalDate Fornecedor
+ * valorMercado Double Fornecedor
+ * paginaWeb String Fornecedor
+ * contatoVendedor String Fornecedor
+ */
 public class Fornecedor extends EntidadeAuditavel {
 
     @Column

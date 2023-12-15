@@ -8,6 +8,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.ifpe.oxefood.util.exceptions.ProdutoException;
+
 @Service
 public class ProdutoService {
     @Autowired
@@ -15,6 +17,9 @@ public class ProdutoService {
 
     @Transactional
     public Produto save(Produto produto) {
+        if (produto.getValorUnitario() < 10) {
+            throw new ProdutoException(ProdutoException.MSG_VALOR_MINIMO_PRODUTO);
+        }
 
         produto.setHabilitado(Boolean.TRUE);
         produto.setVersao(1L);
@@ -58,11 +63,29 @@ public class ProdutoService {
         repository.save(produto);
     }
 
-    public List<Produto> listarTodos() {
-        return null;
+    public List<Produto> filtrar(String codigo, String titulo, Long idCategoria) {
+
+        List<Produto> listaProdutos = repository.findAll();
+
+        if ((codigo != null && !"".equals(codigo)) &&
+                (titulo == null || "".equals(titulo)) &&
+                (idCategoria == null)) {
+            listaProdutos = repository.consultarPorCodigo(codigo);
+        } else if ((codigo == null || "".equals(codigo)) &&
+                (titulo != null && !"".equals(titulo)) &&
+                (idCategoria == null)) {
+            listaProdutos = repository.findByTituloContainingIgnoreCaseOrderByTituloAsc(titulo);
+        } else if ((codigo == null || "".equals(codigo)) &&
+                (titulo == null || "".equals(titulo)) &&
+                (idCategoria != null)) {
+            listaProdutos = repository.consultarPorCategoria(idCategoria);
+        } else if ((codigo == null || "".equals(codigo)) &&
+                (titulo != null && !"".equals(titulo)) &&
+                (idCategoria != null)) {
+            listaProdutos = repository.consultarPorTituloECategoria(titulo, idCategoria);
+        }
+
+        return listaProdutos;
     }
 
-    public Produto obterPorID(Long id) {
-        return null;
-    }
 }

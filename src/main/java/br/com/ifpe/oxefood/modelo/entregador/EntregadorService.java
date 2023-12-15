@@ -58,12 +58,4 @@ public class EntregadorService {
 
         repository.save(entregador);
     }
-
-    public List<Entregador> listarTodos() {
-        return null;
-    }
-
-    public Entregador obterPorID(Long id) {
-        return null;
-    }
 }

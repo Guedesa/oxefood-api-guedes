@@ -14,30 +14,31 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class FornecedorRequest {
 
-    private String nome;
+   private String nome;
 
-    private String endereco;
+   @JsonFormat(pattern = "dd/MM/yyyy")
+   private LocalDate dataFundacao;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate dataFundacao;
+   private String endereco;
 
-    private Double valorMercado;
+   private Double valorMercado;
 
-    private String paginaWeb;
+   private String paginaWeb;
 
-    private String contatoVendedor;
+   private String contatoVendedor;
 
-    public Fornecedor build() {
+   public Fornecedor build() {
 
-        return Fornecedor.builder()
-                .nome(nome)
-                .endereco(endereco)
-                .dataFundacao(dataFundacao)
-                .valorMercado(valorMercado)
-                .paginaWeb(paginaWeb)
-                .contatoVendedor(contatoVendedor)
-                .build();
-    }
+      return Fornecedor.builder()
+            .nome(nome)
+            .dataFundacao(dataFundacao)
+            .endereco(endereco)
+            .valorMercado(valorMercado)
+            .paginaWeb(paginaWeb)
+            .contatoVendedor(contatoVendedor)
+            .build();
+   }
 }
